@@ -15,8 +15,10 @@ Built with plain HTML, CSS and JavaScript, plus Bootstrap 5.
 
 ## Data access
 - Board code uses the Promise-based `getNotes()`, `saveNote(note)` and `deleteNote(id)` functions in `js/storage.js`.
-- These functions currently persist notes in `localStorage`; they can be switched to REST requests when the Spring Boot API is available.
-- Note IDs are assigned by the local storage adapter for now. The REST implementation should use the ID returned by the server.
-- Dates use `YYYY-MM-DD`; status values (`todo`, `progress`, `done`, `cancel`) and string-array tags are kept stable for the backend model.
-- Authentication/session and theme persistence still use the existing local storage helpers; server-side authentication can be connected when the API is added.
+- These functions currently persist notes in `localStorage`.
+- Note IDs are assigned by the local storage adapter .
+- Local demo passwords are stored as Base64, which is reversible and not encryption; this is temporary and must not be used for real credentials. 
+- Notes include `priority`, `createdAt`, `completedAt`, `checklist`, `x`, `y`, `linkedTo` and `timeSpent` fields .
+- Dates use `YYYY-MM-DD`; status values (`todo`, `progress`, `done`, `cancel`) and string-array tags are kept stable .
+- Authentication/session and theme persistence still use the existing local storage helpers.
 

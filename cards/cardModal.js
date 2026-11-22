@@ -5,11 +5,11 @@ var $f = function(id){ return document.getElementById(id); };
 
 function openModal(id, dueDate){
   return window.noteModalReady.then(function(){
-    editId = id || null;
-    var t = id ? tasks.filter(function(x){ return x.id === id; })[0]
+    editId = id == null ? null : String(id);
+    var t = editId !== null ? tasks.filter(function(x){ return String(x.id) === editId; })[0]
                : {title:"",desc:"",start:iso(0),due:dueDate||iso(3),status:"todo",style:0,tags:[],pin:false,remind:false};
-    if (!id && dueDate && dueDate < t.start) t.start = dueDate;
-    $f("mTitle").textContent = id ? "Edit note" : "New note";
+    if (editId === null && dueDate && dueDate < t.start) t.start = dueDate;
+    $f("mTitle").textContent = editId !== null ? "Edit note" : "New note";
     $f("fTitle").value = t.title; $f("fDesc").value = t.desc;
     $f("fStart").value = t.start; $f("fDue").value = t.due;
     $f("fStatus").value = t.status; $f("fStyle").value = t.style;
@@ -32,12 +32,13 @@ window.noteModalReady.then(function(){
     var title = $f("fTitle").value.trim(), s = $f("fStart").value, d = $f("fDue").value;
     if (!title){ $f("mErr").textContent = "Give your note a title."; return; }
     if (s && d && d < s){ $f("mErr").textContent = "Due date can’t be before start."; return; }
-    var data = {
+    var existing = editId === null ? {} : tasks.filter(function(task){ return String(task.id) === editId; })[0];
+    var data = Object.assign({}, existing, {
       title: title, desc: $f("fDesc").value.trim(), start: s, due: d,
       status: $f("fStatus").value, style: +$f("fStyle").value, pin: $f("fPin").checked, remind: $f("fRemind").checked,
       tags: Array.prototype.filter.call(document.querySelectorAll("#fTags input"), function(i){ return i.checked; }).map(function(i){ return i.value; })
-    };
-    if (editId) data.id = editId;
+    });
+    if (editId !== null) data.id = editId;
     persistTask(data).then(function(){
       bsModal.hide(); render();
     }).catch(function(error){

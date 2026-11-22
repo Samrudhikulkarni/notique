@@ -42,7 +42,7 @@ function initCalendar(){
       return;
     }
     var chip = e.target.closest(".cchip");
-    if (chip){ openModal(+chip.dataset.id); return; }
+    if (chip){ openModal(chip.dataset.id); return; }
     var day = e.target.closest(".day");
     if (day && day.dataset.d) openModal(null, day.dataset.d);
   });

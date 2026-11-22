@@ -13,13 +13,28 @@ function getUsers(){ return get("sb_users", []); }
 function saveUsers(u){ set("sb_users", u); }
 function encode(p){ return btoa(unescape(encodeURIComponent(p))); }
 
+function normalizeNote(note){
+  var saved = Object.assign({
+    priority:"medium",
+    createdAt:iso(0),
+    completedAt:null,
+    checklist:[],
+    x:null,
+    y:null,
+    linkedTo:[],
+    timeSpent:0
+  }, note);
+  if (saved.id != null) saved.id = String(saved.id);
+  return saved;
+}
+
 function getNotes(){
   return Promise.resolve().then(function(){
     var session = getSession();
     if (!session) throw new Error("A signed-in user is required to load notes.");
     var notes = get("sb_tasks_" + session.email, []);
     if (!Array.isArray(notes)) throw new Error("The saved notes are invalid.");
-    return notes;
+    return notes.map(normalizeNote);
   });
 }
 
@@ -32,8 +47,8 @@ function saveNote(note){
     var key = "sb_tasks_" + session.email;
     var notes = get(key, []);
     if (!Array.isArray(notes)) throw new Error("The saved notes are invalid.");
-    var saved = Object.assign({}, note);
-    if (saved.id == null) saved.id = Date.now();
+    var saved = normalizeNote(note);
+    if (saved.id == null) saved.id = String(Date.now());
 
     var index = notes.findIndex(function(item){ return String(item.id) === String(saved.id); });
     if (index < 0) notes.push(saved);

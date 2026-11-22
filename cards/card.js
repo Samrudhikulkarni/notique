@@ -1,16 +1,41 @@
 /* Sticky-note card HTML + 3D tilt */
 var TAGCLS = {Important:"danger", Pending:"primary", Urgent:"warning", Bug:"dark", Feature:"success"};
 
+function daysUntilDue(t){
+  if (!t.due) return null;
+  var today = iso(0).split("-"), due = t.due.split("-");
+  var todayDate = Date.UTC(+today[0], +today[1]-1, +today[2]);
+  var dueDate = Date.UTC(+due[0], +due[1]-1, +due[2]);
+  return Math.round((dueDate-todayDate)/86400000);
+}
+
+function ageLevel(t){
+  if (!t.due || t.status === "done" || t.status === "cancel") return 0;
+  var daysLeft = daysUntilDue(t);
+  if (daysLeft < 0) return 3;
+  if (daysLeft === 0) return 2;
+  if (daysLeft <= 3) return 1;
+  return 0;
+}
+
 function cardHTML(t){
-  var late = t.due && t.due < iso(0) && t.status !== "done" && t.status !== "cancel";
-  return '<div class="note s'+t.style+(t.pin?' pinned-note':'')+'" data-bs-theme="light" draggable="true" data-id="'+t.id+'" style="--r:'+((t.id%5)-2)*0.8+'deg">'
+  var age = ageLevel(t), daysLeft = daysUntilDue(t);
+  var ageTitle = age === 1 ? "Due in " + daysLeft + " day" + (daysLeft === 1 ? "" : "s")
+    : age === 2 ? "Due today"
+    : age === 3 ? "Overdue by " + Math.abs(daysLeft) + " day" + (Math.abs(daysLeft) === 1 ? "" : "s") : "";
+  var stamp = age === 2 ? "Due today" : age === 3 ? "Overdue · " + Math.abs(daysLeft) + "d" : "";
+  var id = String(t.id), tilt = 0;
+  for (var i = 0; i < id.length; i++) tilt = (tilt * 31 + id.charCodeAt(i)) % 5;
+  return '<div class="note age-'+age+' s'+t.style+(t.pin?' pinned-note':'')+'" data-bs-theme="light" draggable="true" data-id="'+id+'"'+(ageTitle?' title="'+ageTitle+'"':'')+' style="--r:'+((tilt-2)*0.8)+'deg">'
+    + '<span class="age-layer" aria-hidden="true"></span>'
     + (t.pin ? '<span class="note-pin" role="img" aria-label="Pinned"></span>' : '')
     + '<h5 class="mb-1">'+esc(t.title)+'</h5>'
     + '<p class="small mb-2">'+esc(t.desc)+'</p>'
     + '<div class="meta d-flex flex-wrap gap-1 my-2">'
-    + t.tags.map(function(x){ return '<span class="badge rounded-pill text-bg-'+TAGCLS[x]+'">'+x+'</span>'; }).join("")+'</div>'
-    + '<div class="time small fw-semibold"><i class="bi bi-calendar-event me-1"></i>'+fmt(t.start)+' → '+fmt(t.due)
-    + (late ? ' <span class="badge text-bg-light text-danger">overdue</span>' : '')+'</div>'
+    + t.tags.map(function(x){ return '<span class="badge rounded-pill text-bg-'+TAGCLS[x]+'">'+x+'</span>'; }).join("")
+    + (stamp ? '<span class="age-stamp">'+stamp+'</span>' : '')
+    + '</div>'
+    + '<div class="time small fw-semibold"><i class="bi bi-calendar-event me-1"></i>'+fmt(t.start)+' → '+fmt(t.due)+'</div>'
     + '<div class="d-flex gap-1 mt-2">'
     + '<select class="form-select form-select-sm" data-mv="'+t.id+'">'
     + COLS.map(function(x){ return '<option value="'+x[0]+'"'+(x[0]===t.status?" selected":"")+'>'+x[1]+'</option>'; }).join("")+'</select>'

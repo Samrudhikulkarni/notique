@@ -144,10 +144,12 @@ Promise.all([window.sidebarReady, window.headerReady]).then(function(){
           if (confirmed) removeTask(deleteId);
         });
       }
-      if (d.ed) openModal(+d.ed);
+      if (d.ed) openModal(d.ed);
     });
 
     initTilt(board); initDragDrop(board); initCalendar();
+    document.addEventListener("visibilitychange", function(){ if (!document.hidden) render(); });
+    setInterval(render, 30 * 60 * 1000);
     render(); remindToast();
   });
 }).catch(function(error){
