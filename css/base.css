@@ -1,13 +1,73 @@
-:root{--ink:#161616;--card:#fffaf0;--accent:#e8664d;--side:#151515}
-[data-bs-theme="light"]{--bs-body-bg:#f7f0e1}
-[data-bs-theme="dark"]{--bs-body-bg:#1c1a18;--ink:#f3ece0;--card:#2a2623;--side:#0e0d0c}
-body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background-image:radial-gradient(rgba(120,100,70,.18) 1px,transparent 1px);background-size:24px 24px}
-.hide{display:none!important}
-.btn-ink{background:var(--ink);color:var(--bs-body-bg);border:0;font-weight:700;transition:.2s}
-.btn-ink:hover{opacity:.85;color:var(--bs-body-bg);transform:translateY(-1px)}
-.modal-content{border-radius:22px;border:0}
-.form-control,.form-select{border-radius:12px}
+:root {
+    --ink: #161616;
+    --card: #fffaf0;
+    --accent: #e8664d;
+    --side: #151515
+}
+
+[data-bs-theme="light"] {
+    --bs-body-bg: #f7f0e1
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: #1c1a18;
+    --ink: #f3ece0;
+    --card: #2a2623;
+    --side: #0e0d0c
+}
+
+body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background-image: radial-gradient(rgba(120, 100, 70, .18) 1px, transparent 1px);
+    background-size: 24px 24px
+}
+
+.hide {
+    display: none !important
+}
+
+.btn-ink {
+    background: var(--ink);
+    color: var(--bs-body-bg);
+    border: 0;
+    font-weight: 700;
+    transition: .2s
+}
+
+.btn-ink:hover {
+    opacity: .85;
+    color: var(--bs-body-bg);
+    transform: translateY(-1px)
+}
+
+.modal-content {
+    border-radius: 22px;
+    border: 0
+}
+
+.form-control,
+.form-select {
+    border-radius: 12px
+}
+
 /* app shell */
-.app{display:flex;min-height:100vh}
-.main{flex:1;min-width:0;padding:28px 32px 50px}
-@media(max-width:991px){.app{flex-direction:column}.main{padding:18px 14px 40px}}
+.app {
+    display: flex;
+    min-height: 100vh
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 32px 50px
+}
+
+@media(max-width:991px) {
+    .app {
+        flex-direction: column
+    }
+
+    .main {
+        padding: 18px 14px 40px
+    }
+}

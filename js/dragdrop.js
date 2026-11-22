@@ -16,8 +16,8 @@ function initDragDrop(board){
   board.addEventListener("drop", function(e){
     var c = e.target.closest(".lane"); if (!c || !dragId) return;
     e.preventDefault();
-    var t = tasks.filter(function(x){ return x.id == dragId; })[0];
-    if (t){ t.status = c.dataset.s; tasks = tasks.filter(function(x){ return x !== t; }); tasks.push(t); save(); }
-    dragId = null; render();
+    var id = dragId;
+    dragId = null;
+    updateTask(id, {status:c.dataset.s}, true);
   });
 }

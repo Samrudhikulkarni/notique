@@ -37,8 +37,9 @@ function initCalendar(){
     }
     var ck = e.target.closest("[data-ck]");
     if (ck){
-      tasks.forEach(function(t){ if (t.id == ck.dataset.ck) t.status = t.status === "done" ? "todo" : "done"; });
-      save(); render(); return;
+      var task = tasks.filter(function(t){ return String(t.id) === String(ck.dataset.ck); })[0];
+      if (task) updateTask(task.id, {status:task.status === "done" ? "todo" : "done"});
+      return;
     }
     var chip = e.target.closest(".cchip");
     if (chip){ openModal(+chip.dataset.id); return; }
@@ -58,8 +59,9 @@ function initCalendar(){
   cal.addEventListener("drop", function(e){
     var d = e.target.closest(".day"); if (!d || !d.dataset.d || !calDrag) return;
     e.preventDefault();
-    tasks.forEach(function(t){ if (t.id == calDrag){ t.due = d.dataset.d; if (t.start > t.due) t.start = t.due; } });
-    calDrag = null; save(); render();
+    var task = tasks.filter(function(t){ return String(t.id) === String(calDrag); })[0];
+    calDrag = null; render();
+    if (task) updateTask(task.id, {due:d.dataset.d, start:task.start > d.dataset.d ? d.dataset.d : task.start});
   });
   cal.addEventListener("dragend", function(){ calDrag = null; render(); });
 }
