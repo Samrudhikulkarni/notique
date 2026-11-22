@@ -37,9 +37,13 @@ window.noteModalReady.then(function(){
       status: $f("fStatus").value, style: +$f("fStyle").value, pin: $f("fPin").checked, remind: $f("fRemind").checked,
       tags: Array.prototype.filter.call(document.querySelectorAll("#fTags input"), function(i){ return i.checked; }).map(function(i){ return i.value; })
     };
-    if (editId){ tasks.forEach(function(t){ if (t.id === editId) Object.assign(t, data); }); }
-    else { data.id = Date.now(); tasks.push(data); }
-    save(); bsModal.hide(); render();
+    if (editId) data.id = editId;
+    persistTask(data).then(function(){
+      bsModal.hide(); render();
+    }).catch(function(error){
+      console.error("Could not save the note.", error);
+      $f("mErr").textContent = "Could not save your note. Please try again.";
+    });
   };
 }).catch(function(error){
   console.error("The note editor could not be initialized.", error);

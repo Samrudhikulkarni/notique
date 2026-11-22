@@ -1,19 +1,136 @@
-.calhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.calhead h2{font-weight:800;font-size:1.5rem;margin:0}
-.calgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
-.dow{text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.6;padding:6px 0}
-.day{min-height:116px;background:var(--card);border-radius:16px;padding:8px;border:2px solid transparent;transition:.15s;cursor:pointer}
-.day:hover{border-color:var(--bs-border-color);transform:translateY(-2px)}
-.day.blank{background:transparent;cursor:default;pointer-events:none}
-.day.today{background:var(--ink);color:var(--bs-body-bg)}
-.day.over{border-color:var(--accent);background:rgba(232,102,77,.15)}
-.dn{font-weight:800;font-size:14px}
-.cchip{display:flex;align-items:center;gap:6px;margin-top:5px;padding:4px 6px;border-radius:10px;background:color-mix(in srgb,var(--sc) 28%,#fff);border-left:4px solid var(--sc);font-size:12px;font-weight:600;cursor:grab;color:#222}
-.cchip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-.cchip.done span{text-decoration:line-through;opacity:.55}
-.cchip i.bi-pin-angle-fill{color:#d6342a;font-size:11px}
-.ck{border:1.5px solid var(--sc);background:#fff;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;padding:0;font-size:12px;color:transparent;flex:none}
-.ck:hover{color:var(--sc)}
-.cchip.done .ck{background:var(--sc);color:#fff}
-.more{font-size:11px;opacity:.7;margin-top:4px}
-@media(max-width:700px){.day{min-height:80px;padding:4px}.cchip span{display:none}}
+.calhead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px
+}
+
+.calhead h2 {
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin: 0
+}
+
+.calgrid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px
+}
+
+.dow {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    opacity: .6;
+    padding: 6px 0
+}
+
+.day {
+    min-height: 116px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 8px;
+    border: 2px solid transparent;
+    transition: .15s;
+    cursor: pointer
+}
+
+.day:hover {
+    border-color: var(--bs-border-color);
+    transform: translateY(-2px)
+}
+
+.day.blank {
+    background: transparent;
+    cursor: default;
+    pointer-events: none
+}
+
+.day.today {
+    background: var(--ink);
+    color: var(--bs-body-bg)
+}
+
+.day.over {
+    border-color: var(--accent);
+    background: rgba(232, 102, 77, .15)
+}
+
+.dn {
+    font-weight: 800;
+    font-size: 14px
+}
+
+.cchip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--sc) 28%, #fff);
+    border-left: 4px solid var(--sc);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: grab;
+    color: #222
+}
+
+.cchip span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1
+}
+
+.cchip.done span {
+    text-decoration: line-through;
+    opacity: .55
+}
+
+.cchip i.bi-pin-angle-fill {
+    color: #d6342a;
+    font-size: 11px
+}
+
+.ck {
+    border: 1.5px solid var(--sc);
+    background: #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-size: 12px;
+    color: transparent;
+    flex: none
+}
+
+.ck:hover {
+    color: var(--sc)
+}
+
+.cchip.done .ck {
+    background: var(--sc);
+    color: #fff
+}
+
+.more {
+    font-size: 11px;
+    opacity: .7;
+    margin-top: 4px
+}
+
+@media(max-width:700px) {
+    .day {
+        min-height: 80px;
+        padding: 4px
+    }
+
+    .cchip span {
+        display: none
+    }
+}

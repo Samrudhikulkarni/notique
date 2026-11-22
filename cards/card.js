@@ -3,8 +3,8 @@ var TAGCLS = {Important:"danger", Pending:"primary", Urgent:"warning", Bug:"dark
 
 function cardHTML(t){
   var late = t.due && t.due < iso(0) && t.status !== "done" && t.status !== "cancel";
-  return '<div class="note s'+t.style+'" data-bs-theme="light" draggable="true" data-id="'+t.id+'" style="--r:'+((t.id%5)-2)*0.8+'deg">'
-    + (t.pin ? '<i class="bi bi-pin-angle-fill pinned"></i>' : '')
+  return '<div class="note s'+t.style+(t.pin?' pinned-note':'')+'" data-bs-theme="light" draggable="true" data-id="'+t.id+'" style="--r:'+((t.id%5)-2)*0.8+'deg">'
+    + (t.pin ? '<span class="note-pin" role="img" aria-label="Pinned"></span>' : '')
     + '<h5 class="mb-1">'+esc(t.title)+'</h5>'
     + '<p class="small mb-2">'+esc(t.desc)+'</p>'
     + '<div class="meta d-flex flex-wrap gap-1 my-2">'
