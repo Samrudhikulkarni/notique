@@ -130,6 +130,15 @@ Promise.all([window.sidebarReady, window.headerReady]).then(function(){
     });
     board.addEventListener("click", function(e){
       var b = e.target.closest("button"); if (!b) return; var d = b.dataset;
+      if (d.more){
+        openNoteDetails(d.more).catch(function(error){
+          console.error("Could not open note details.", error);
+          NotiquePopup.alert("Could not open this note. Please try again.", {title:"Note unavailable"}).catch(function(popupError){
+            console.error("The note details error could not be displayed.", popupError);
+          });
+        });
+        return;
+      }
       if (d.pin || d.bell){
         var id = d.pin || d.bell;
         var current = tasks.filter(function(task){ return String(task.id) === String(id); })[0];

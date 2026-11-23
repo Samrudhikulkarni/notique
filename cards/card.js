@@ -19,6 +19,7 @@ function ageLevel(t){
 }
 
 function cardHTML(t){
+  var desc = t.desc || "";
   var age = ageLevel(t), daysLeft = daysUntilDue(t);
   var ageTitle = age === 1 ? "Due in " + daysLeft + " day" + (daysLeft === 1 ? "" : "s")
     : age === 2 ? "Due today"
@@ -30,7 +31,8 @@ function cardHTML(t){
     + '<span class="age-layer" aria-hidden="true"></span>'
     + (t.pin ? '<span class="note-pin" role="img" aria-label="Pinned"></span>' : '')
     + '<h5 class="mb-1">'+esc(t.title)+'</h5>'
-    + '<p class="small mb-2">'+esc(t.desc)+'</p>'
+    + '<p class="note-desc small mb-1">'+esc(desc)+'</p>'
+    + (desc.length > 90 ? '<button type="button" class="note-more" data-more="'+id+'" aria-label="Read full note">…more</button>' : '')
     + '<div class="meta d-flex flex-wrap gap-1 my-2">'
     + t.tags.map(function(x){ return '<span class="badge rounded-pill text-bg-'+TAGCLS[x]+'">'+x+'</span>'; }).join("")
     + (stamp ? '<span class="age-stamp">'+stamp+'</span>' : '')

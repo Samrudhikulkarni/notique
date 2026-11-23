@@ -1,0 +1,26 @@
+<div class="modal fade note-detail-modal" id="detailModal" tabindex="-1" aria-labelledby="detailTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable note-detail-dialog">
+    <div class="modal-content note-detail-content">
+      <div class="note note-detail-paper age-0 s0" id="detailPaper" data-bs-theme="light">
+        <span class="age-layer" aria-hidden="true"></span>
+        <span class="note-pin" id="detailPin" role="img" aria-label="Pinned" hidden></span>
+        <div class="modal-header note-detail-header">
+          <h5 class="modal-title note-detail-title" id="detailTitle"></h5>
+          <button type="button" class="btn-close note-detail-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body note-detail-body" tabindex="0" aria-label="Note details">
+          <p class="note-detail-description" id="detailDesc"></p>
+          <div class="note-detail-tags" id="detailTags"></div>
+          <div class="note-detail-info">
+            <span><i class="bi bi-calendar-event me-1"></i><span id="detailDates"></span></span>
+            <span><i class="bi bi-list-check me-1"></i><span id="detailStatus"></span></span>
+          </div>
+        </div>
+        <div class="modal-footer note-detail-footer">
+          <button type="button" class="btn note-detail-edit rounded-pill px-4" id="detailEdit"><i class="bi bi-pencil me-1"></i>Edit note</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,45 @@
 /* Add / edit card — Bootstrap modal */
 var editId = null;
 var bsModal;
+var detailModal;
+var detailId = null;
+var pendingDetailEditId = null;
 var $f = function(id){ return document.getElementById(id); };
+
+function openNoteDetails(id){
+  return window.noteDetailsReady.then(function(){
+    var note = tasks.filter(function(task){ return String(task.id) === String(id); })[0];
+    if (!note) throw new Error("The requested note could not be found.");
+
+    detailId = String(note.id);
+    var paper = $f("detailPaper");
+    paper.className = "note note-detail-paper age-" + ageLevel(note) + " s" + note.style + (note.pin ? " pinned-note" : "");
+    $f("detailTitle").textContent = note.title || "";
+    $f("detailDesc").textContent = note.desc || "No description yet.";
+    $f("detailPin").hidden = !note.pin;
+    $f("detailDates").textContent = fmt(note.start) + " → " + fmt(note.due);
+
+    var status = COLS.filter(function(column){ return column[0] === note.status; })[0];
+    $f("detailStatus").textContent = status ? status[1] : note.status;
+
+    var tags = $f("detailTags");
+    tags.innerHTML = "";
+    if (note.tags && note.tags.length){
+      note.tags.forEach(function(tag){
+        var badge = document.createElement("span");
+        var color = Object.prototype.hasOwnProperty.call(TAGCLS, tag) ? TAGCLS[tag] : "secondary";
+        badge.className = "badge rounded-pill text-bg-" + color;
+        badge.textContent = tag;
+        tags.appendChild(badge);
+      });
+    } else {
+      tags.textContent = "No tags";
+    }
+
+    detailModal.show();
+    return note;
+  });
+}
 
 function openModal(id, dueDate){
   return window.noteModalReady.then(function(){
@@ -48,4 +86,21 @@ window.noteModalReady.then(function(){
   };
 }).catch(function(error){
   console.error("The note editor could not be initialized.", error);
+});
+
+window.noteDetailsReady.then(function(){
+  var modal = $f("detailModal");
+  detailModal = new bootstrap.Modal(modal);
+  $f("detailEdit").onclick = function(){
+    pendingDetailEditId = detailId;
+    detailModal.hide();
+  };
+  modal.addEventListener("hidden.bs.modal", function(){
+    if (pendingDetailEditId === null) return;
+    var id = pendingDetailEditId;
+    pendingDetailEditId = null;
+    openModal(id);
+  });
+}).catch(function(error){
+  console.error("The note details view could not be initialized.", error);
 });

@@ -123,6 +123,138 @@
         rgba(200, 150, 60, .08)
 }
 
+.note-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden
+}
+
+.note-more {
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: -.1rem 0 .45rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: .78rem;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    transform: translateZ(14px)
+}
+
+.note-detail-dialog {
+    max-width: 560px
+}
+
+.note-detail-content {
+    border: 0;
+    background: transparent;
+    box-shadow: none
+}
+
+.note-detail-dialog .note-detail-content {
+    overflow: visible
+}
+
+.note-detail-paper {
+    display: flex;
+    flex-direction: column;
+    min-height: min(300px, calc(100vh - 3.5rem));
+    max-height: calc(100vh - 3.5rem);
+    margin: 0;
+    padding: 18px 14px 12px;
+    cursor: default;
+    transform: perspective(900px) rotate(-1deg) scale(.96);
+    transition: transform .24s ease, opacity .24s ease
+}
+
+.modal.show .note-detail-paper {
+    transform: perspective(900px) rotate(0) scale(1)
+}
+
+.note-detail-header,
+.note-detail-footer {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    border: 0
+}
+
+.note-detail-header {
+    padding: 14px 16px 8px
+}
+
+.note-detail-title {
+    max-width: calc(100% - 2.5rem);
+    font-family: Caveat, cursive;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.05;
+    overflow-wrap: anywhere
+}
+
+.note-detail-close {
+    flex: none
+}
+
+.s2 .note-detail-close {
+    filter: invert(1)
+}
+
+.note-detail-body {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 10px 16px
+}
+
+.note-detail-description {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere
+}
+
+.note-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: 1rem
+}
+
+.note-detail-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    font-size: .875rem;
+    font-weight: 600
+}
+
+.note-detail-footer {
+    gap: .5rem;
+    padding: 10px 16px 14px
+}
+
+.note-detail-edit,
+.note-detail-edit:hover,
+.note-detail-edit:focus-visible {
+    border: 0;
+    background: rgba(255, 255, 255, .82);
+    color: #2b2a33;
+    font-weight: 700
+}
+
+.note-detail-edit:hover {
+    background: #fff
+}
+
 .note.dragging {
     opacity: .45
 }
@@ -302,7 +434,9 @@
 
     .note,
     .note-pin,
-    .ib {
+    .ib,
+    .note-more,
+    .note-detail-paper {
         transition: none
     }
 }
